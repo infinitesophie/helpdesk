@@ -15,6 +15,7 @@ class Login extends CI_Controller
 		$this->load->model("user_model");
 		$this->load->model("home_model");
 		$this->load->model("register_model");
+		$this->load->model("fcm_model");
 	}
 
 	public function index()
@@ -30,6 +31,22 @@ class Login extends CI_Controller
 		}
 		$this->template->loadContent("login/index.php", array());
 	}
+
+	public function ajax_fcm_loginToken() 
+	{
+		$user = $_GET['user'];
+		$token = $_GET['token'];
+		
+		$fcm = $this->fcm_model->get_user_from_fcm($user);
+		if ($fcm == 0) {
+			$login = $this->fcm_model->add_user_to_fcm($user, $token);
+		}
+		else
+		{
+			$login = $this->fcm_model->update_user_to_fcm($user, $token );
+		}
+		echo "ff";
+	}	
 
 	public function ajax_check_login() 
 	{
