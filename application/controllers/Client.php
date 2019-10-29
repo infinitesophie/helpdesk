@@ -801,8 +801,51 @@ class Client extends CI_Controller
 		redirect(site_url("client/view_ticket/" . $ticket->ID));
 	}
 
+
+	public function sendSampleFcmNotification($title, $body) {
+		$token = "fgLExWDJVbU:APA91bHSbRKMmMhCPYwm92J-OPWb5PVKdNcSETQylycTxmnPBpWGVnFvLy5UEmcQna71pPPAIrwg4j9EYDbIPa9y0GCauc1z5SgJX1YELaTQznr6cnADq5Eg9I7fB5MNtwxteYJY0fMp";
+		$image="http://www.abystyle.com/9556-thickbox_default/rick-and-morty-messenger-bag-portal-vinyl-small-size.jpg";
+		$icon="https://cdn4.iconfinder.com/data/icons/iconset-addictive-flavour/png/audio_notification.png";
+		$this->sendNotification($token,$title, $body, $image);
+	}
+
+	public function sendNotification($token,$title, $body, $image)
+    {
+		$url = "https://fcm.googleapis.com/fcm/send";
+		$serverKey = "AAAAcKZ-E94:APA91bGvkZ2fXuc_PwXyesCFwYBeXMG79W-2NvpZe1CnRnWo0ujv1vCOLViAg_zcq1BHbCTB7_yGOpFhTEQ2z1jiWZKfCUGt3QwuCUp3BEFz5P0r0RkKTHIhb4m6difZtfLs2eCydM40";
+		
+    
+		$notification = array
+		(
+		'title'		=> $title,
+		'body'		=> $body,
+		'vibrate'	=> 1,
+		'sound'		=> 1
+		//,'image' 	=> $image
+		);
+		
+		$arrayToSend = array('to' => $token, 'notification' => $notification,'priority'=>'high');
+		$json = json_encode($arrayToSend);
+		$headers = array();
+		$headers[] = 'Content-Type: application/json';
+		$headers[] = 'Authorization: key='. $serverKey;
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+		curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
+		//Send the request
+		$response = curl_exec($ch);
+		//Close request
+		if ($response === FALSE) {
+		die('FCM Send Error: ' . curl_error($ch));
+		}
+		curl_close($ch);
+	}
+
 	public function add_pro() 
 	{
+		
 		$title = $this->common->nohtml($this->input->post("title"));
 		$guest_email = $this->common->nohtml($this->input->post("guest_email"));
 		$priority = intval($this->input->post("priority"));
@@ -813,6 +856,7 @@ class Client extends CI_Controller
 
 		$body = $this->lib_filter->go($this->input->post("body"));
 
+		
 		 if($this->settings->info->price_per_ticket > 0) {
         	if($this->user->info->points < $this->settings->info->price_per_ticket) {
         		$this->template->error(lang("error_145"));
@@ -1184,7 +1228,7 @@ class Client extends CI_Controller
 			$this->common->send_email($this->settings->info->ticket_title . " [ID: " . $ticketid . "]: " . $title,
 				 $email_template->message, $email, $headers);
 		}
-
+		$this->sendSampleFcmNotification("New Ticket: #".$ticketid, $title);
 
 
 		$this->session->set_flashdata("globalmsg", lang("success_44") . $extra);
