@@ -97,6 +97,13 @@
             $('#'+form).prepend('<div class="form-error">'+data.error_msg+'</div>');
           }
           if(data.success) {
+
+            //if ('undefined'!= app) 
+			      //{
+			      //	app.makeToast(username);
+			      //}
+
+
             // allow form submit
             $('#'+form+ ' input[type="submit"]').val("Logging In ...");
             $('#'+form).unbind('submit').submit();
