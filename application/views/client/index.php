@@ -38,7 +38,7 @@
                     </div>
             </div>
         <?php endif; ?>
-        <!--<div class="form-group">
+        <div class="form-group">
                 <label for="p-in" class="col-md-3 label-heading"><?php echo lang("ctn_428") ?></label>
                 <div class="col-md-9 ui-front">
                     <select name="priority" class="form-control">
@@ -48,7 +48,7 @@
                     <option value="3"><?php echo lang("ctn_432") ?></option>
                     </select>
                 </div>
-        </div>-->
+        </div>
         <div class="form-group">
                 <label for="p-in" class="col-md-3 label-heading"><?php echo lang("ctn_433") ?></label>
                 <div class="col-md-9 ui-front">
