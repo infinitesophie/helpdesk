@@ -806,6 +806,9 @@ class Client extends CI_Controller
 		$token = "fgLExWDJVbU:APA91bHSbRKMmMhCPYwm92J-OPWb5PVKdNcSETQylycTxmnPBpWGVnFvLy5UEmcQna71pPPAIrwg4j9EYDbIPa9y0GCauc1z5SgJX1YELaTQznr6cnADq5Eg9I7fB5MNtwxteYJY0fMp";
 		$image="http://www.abystyle.com/9556-thickbox_default/rick-and-morty-messenger-bag-portal-vinyl-small-size.jpg";
 		$icon="https://cdn4.iconfinder.com/data/icons/iconset-addictive-flavour/png/audio_notification.png";
+		
+		//SELECT DISTINCT(user), token FROM `fcm_user` where user in (SELECT DISTINCT username FROM `users` WHERE id in(SELECT DISTINCT userid from `user_group_users` where groupid in(SELECT DISTINCT id FROM `user_groups` where name="Default Group")))
+		//SELECT DISTINCT(user), token FROM `fcm_user` where user in (SELECT DISTINCT username FROM `users` WHERE id in(SELECT DISTINCT userid from `user_group_users` where groupid in(SELECT DISTINCT id FROM `user_groups` where id IN(SELECT groupid FROM `ticket_category_groups`where catid IN (SELECT ID FROM `ticket_categories` where id=7)))))
 		$this->sendNotification($token,$title, $body, $image);
 	}
 
