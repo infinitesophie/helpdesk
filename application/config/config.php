@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://hpcw1.srmist.edu.in/helpdesk/';
+$config['base_url'] = 'https://192.168.0.105/helpdesk_new/helpdesk/';
 
 /*
 |--------------------------------------------------------------------------
