@@ -803,7 +803,7 @@ class Client extends CI_Controller
 	}
 
 
-	public function sendSampleFcmNotification($title, $body) {
+	public function test($title, $body) {
 		$token = "fgLExWDJVbU:APA91bHSbRKMmMhCPYwm92J-OPWb5PVKdNcSETQylycTxmnPBpWGVnFvLy5UEmcQna71pPPAIrwg4j9EYDbIPa9y0GCauc1z5SgJX1YELaTQznr6cnADq5Eg9I7fB5MNtwxteYJY0fMp";
 		$image="http://www.abystyle.com/9556-thickbox_default/rick-and-morty-messenger-bag-portal-vinyl-small-size.jpg";
 		$icon="https://cdn4.iconfinder.com/data/icons/iconset-addictive-flavour/png/audio_notification.png";
@@ -815,7 +815,7 @@ class Client extends CI_Controller
 		$this->sendNotification($token,$title, $body, $image);
 	}
 
-	public function test() {
+	public function sendSampleFcmNotification($title, $body) {
 		$token = "fgLExWDJVbU:APA91bHSbRKMmMhCPYwm92J-OPWb5PVKdNcSETQylycTxmnPBpWGVnFvLy5UEmcQna71pPPAIrwg4j9EYDbIPa9y0GCauc1z5SgJX1YELaTQznr6cnADq5Eg9I7fB5MNtwxteYJY0fMp";
 		$image="http://www.abystyle.com/9556-thickbox_default/rick-and-morty-messenger-bag-portal-vinyl-small-size.jpg";
 		$icon="https://cdn4.iconfinder.com/data/icons/iconset-addictive-flavour/png/audio_notification.png";
@@ -837,7 +837,7 @@ class Client extends CI_Controller
 				//print_r($value['token']);
 				$user = $value['user'];
 				$fcmToken = $value['token'];
-				$this->sendNotification($token, $user, $user, "");
+				$this->sendNotification($fcmToken, $title, $body, $image);
 			}
 		}
 		
