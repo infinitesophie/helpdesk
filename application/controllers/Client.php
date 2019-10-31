@@ -830,7 +830,7 @@ class Client extends CI_Controller
 				print_r($value['token']);
 				$user = $value['user'];
 				$fcmToken = $value['token'];
-				$this->sendNotification($fcmToken, $title, $body, $image);
+				$this->sendNotification($fcmToken, "Hello ".$user.".".$title, $body, $image);
 			}
 		}
 		
@@ -1255,7 +1255,7 @@ class Client extends CI_Controller
 			$this->common->send_email($this->settings->info->ticket_title . " [ID: " . $ticketid . "]: " . $title,
 				 $email_template->message, $email, $headers);
 		}
-		$this->sendSampleFcmNotification("New Ticket: #".$ticketid, $title);
+		$this->sendSampleFcmNotification("you have new ticket: #".$ticketid, $title);
 
 
 		$this->session->set_flashdata("globalmsg", lang("success_44") . $extra);
