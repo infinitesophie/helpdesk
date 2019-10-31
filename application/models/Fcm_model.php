@@ -1,5 +1,5 @@
 <?php
-
+include (APPPATH . "/config/ChromePhp.php");
 class FCM_Model extends CI_Model 
 {
 	
@@ -30,19 +30,23 @@ class FCM_Model extends CI_Model
         #	->set("token", $token)->update("fcm_user");
 	}
 
-	public function get_recent_articles($limit) 
+	public function get_all_users_for_userGroup() 
 	{
-		return $this->db->select("knowledge_articles.ID, knowledge_articles.title,
-			knowledge_articles.last_updated_timestamp, knowledge_articles.body,
-			knowledge_articles.catid,
-			users.ID as userid, users.username, users.avatar, users.online_timestamp,
-			knowledge_categories.name as catname, knowledge_categories.image")
-			->join("knowledge_categories", "knowledge_categories.ID = knowledge_articles.catid")
-			->join("users", "users.ID = knowledge_articles.userid")
-			->order_by("knowledge_articles.ID", "DESC")
-			->limit($limit)
-			->get("knowledge_articles");
+				$groupName = "Default Group";
+				$result = $this->db->query("SELECT DISTINCT(user), token FROM `fcm_user` where user in (SELECT DISTINCT username FROM `users` WHERE id in(SELECT DISTINCT userid from `user_group_users` where groupid in(SELECT DISTINCT id FROM `user_groups` where name='".$groupName."')))");
+				$result = $result->result_array();
+				return $result;
+	}
 
+	public function get_all_users_for_ticketCategory() 
+	{
+				//SELECT DISTINCT(user), token FROM `fcm_user` where user in (SELECT DISTINCT username FROM `users` WHERE id in(SELECT DISTINCT userid from `user_group_users` where groupid in(SELECT DISTINCT id FROM `user_groups` where name="Default Group")))
+				//SELECT DISTINCT(user), token FROM `fcm_user` where user in (SELECT DISTINCT username FROM `users` WHERE id in(SELECT DISTINCT userid from `user_group_users` where groupid in(SELECT DISTINCT id FROM `user_groups` where id IN(SELECT groupid FROM `ticket_category_groups`where catid IN (SELECT ID FROM `ticket_categories` where id=7)))))
+
+				$ticketId = 7;
+				$result = $this->db->query("SELECT DISTINCT(user), token FROM `fcm_user` where user in (SELECT DISTINCT username FROM `users` WHERE id in(SELECT DISTINCT userid from `user_group_users` where groupid in(SELECT DISTINCT id FROM `user_groups` where id IN(SELECT groupid FROM `ticket_category_groups`where catid IN (SELECT ID FROM `ticket_categories` where id='".$ticketId."')))))");
+				$result = $result->result_array();
+				return $result;
 	}
 }
 

@@ -13,6 +13,7 @@ class Client extends CI_Controller
 		$this->load->model("home_model");
 		$this->load->model("FAQ_model");
 		$this->load->model("documentation_model");
+		$this->load->model("fcm_model");
 		$this->template->set_error_view("error/client_error.php");
 		$this->template->set_layout("layout/client_layout2.php");
 
@@ -807,9 +808,39 @@ class Client extends CI_Controller
 		$image="http://www.abystyle.com/9556-thickbox_default/rick-and-morty-messenger-bag-portal-vinyl-small-size.jpg";
 		$icon="https://cdn4.iconfinder.com/data/icons/iconset-addictive-flavour/png/audio_notification.png";
 		
-		//SELECT DISTINCT(user), token FROM `fcm_user` where user in (SELECT DISTINCT username FROM `users` WHERE id in(SELECT DISTINCT userid from `user_group_users` where groupid in(SELECT DISTINCT id FROM `user_groups` where name="Default Group")))
-		//SELECT DISTINCT(user), token FROM `fcm_user` where user in (SELECT DISTINCT username FROM `users` WHERE id in(SELECT DISTINCT userid from `user_group_users` where groupid in(SELECT DISTINCT id FROM `user_groups` where id IN(SELECT groupid FROM `ticket_category_groups`where catid IN (SELECT ID FROM `ticket_categories` where id=7)))))
+		//$userlist = $this->fcm_model->get_all_users_for_new_notification();
+		//echo $userlist;
+
+		
 		$this->sendNotification($token,$title, $body, $image);
+	}
+
+	public function test() {
+		$token = "fgLExWDJVbU:APA91bHSbRKMmMhCPYwm92J-OPWb5PVKdNcSETQylycTxmnPBpWGVnFvLy5UEmcQna71pPPAIrwg4j9EYDbIPa9y0GCauc1z5SgJX1YELaTQznr6cnADq5Eg9I7fB5MNtwxteYJY0fMp";
+		$image="http://www.abystyle.com/9556-thickbox_default/rick-and-morty-messenger-bag-portal-vinyl-small-size.jpg";
+		$icon="https://cdn4.iconfinder.com/data/icons/iconset-addictive-flavour/png/audio_notification.png";
+		
+		$userlistForUserGroup = $this->fcm_model->get_all_users_for_userGroup();
+		$userlistForTicketCategory = $this->fcm_model->get_all_users_for_ticketCategory();
+
+		$result = array_merge($userlistForUserGroup,$userlistForTicketCategory);
+
+		$final  = array();
+		if (is_array($result) || is_object($result)){
+			foreach ($result as $current) {
+				if ( ! in_array($current, $final)) {
+					$final[] = $current;
+				}
+			}
+
+			foreach($final as $value){
+				//print_r($value['token']);
+				$user = $value['user'];
+				$fcmToken = $value['token'];
+				$this->sendNotification($token, $user, $user, "");
+			}
+		}
+		
 	}
 
 	public function sendNotification($token,$title, $body, $image)
