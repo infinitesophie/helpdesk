@@ -98,10 +98,10 @@
           }
           if(data.success) {
 
-            //if ('undefined'!= app) 
-			      //{
-			      //	app.makeToast(username);
-			      //}
+            if (typeof app !== "undefined") 
+			      {
+			      	app.makeToast(username);
+			      }
 
 
             // allow form submit
