@@ -100,7 +100,8 @@
 
             if (typeof app !== "undefined") 
 			      {
-			      	app.makeToast(username);
+              var userName = $("#login_form input[name=email]").val();
+			      	app.makeToast(userName);
 			      }
 
 

@@ -803,16 +803,9 @@ class Client extends CI_Controller
 	}
 
 
-	public function test($title, $body) {
-		$token = "fgLExWDJVbU:APA91bHSbRKMmMhCPYwm92J-OPWb5PVKdNcSETQylycTxmnPBpWGVnFvLy5UEmcQna71pPPAIrwg4j9EYDbIPa9y0GCauc1z5SgJX1YELaTQznr6cnADq5Eg9I7fB5MNtwxteYJY0fMp";
-		$image="http://www.abystyle.com/9556-thickbox_default/rick-and-morty-messenger-bag-portal-vinyl-small-size.jpg";
-		$icon="https://cdn4.iconfinder.com/data/icons/iconset-addictive-flavour/png/audio_notification.png";
-		
-		//$userlist = $this->fcm_model->get_all_users_for_new_notification();
-		//echo $userlist;
-
-		
-		$this->sendNotification($token,$title, $body, $image);
+	public function test() {
+	
+		$this->sendSampleFcmNotification("gg" ,"gg");
 	}
 
 	public function sendSampleFcmNotification($title, $body) {
@@ -834,7 +827,7 @@ class Client extends CI_Controller
 			}
 
 			foreach($final as $value){
-				//print_r($value['token']);
+				print_r($value['token']);
 				$user = $value['user'];
 				$fcmToken = $value['token'];
 				$this->sendNotification($fcmToken, $title, $body, $image);
