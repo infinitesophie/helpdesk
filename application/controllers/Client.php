@@ -839,7 +839,7 @@ class Client extends CI_Controller
 	public function sendNotification($token,$title, $body, $image)
     {
 		$url = "https://fcm.googleapis.com/fcm/send";
-		$serverKey = $CI->config->item('fcm_server_key');
+		$serverKey = $this->config->item('fcm_server_key');
 		//$serverKey = "AAAAcKZ-E94:APA91bGvkZ2fXuc_PwXyesCFwYBeXMG79W-2NvpZe1CnRnWo0ujv1vCOLViAg_zcq1BHbCTB7_yGOpFhTEQ2z1jiWZKfCUGt3QwuCUp3BEFz5P0r0RkKTHIhb4m6difZtfLs2eCydM40";
 		
     
