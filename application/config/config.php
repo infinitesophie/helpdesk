@@ -24,6 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://192.168.0.101/helpdesk/';
+$config['fcm_server_key'] = 'AAAAcKZ-E94:APA91bGvkZ2fXuc_PwXyesCFwYBeXMG79W-2NvpZe1CnRnWo0ujv1vCOLViAg_zcq1BHbCTB7_yGOpFhTEQ2z1jiWZKfCUGt3QwuCUp3BEFz5P0r0RkKTHIhb4m6difZtfLs2eCydM40';
+
 
 /*
 |--------------------------------------------------------------------------
